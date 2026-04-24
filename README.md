@@ -1,3 +1,5 @@
+<img width="1640" height="885" alt="image" src="https://github.com/user-attachments/assets/e0f02ece-543d-4557-a464-7f31ba7928f5" />
+
 # AtmManagementSystem
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
