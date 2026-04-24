@@ -1,0 +1,17 @@
+.container {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.footer {
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+}
+
+.footer__inner {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}

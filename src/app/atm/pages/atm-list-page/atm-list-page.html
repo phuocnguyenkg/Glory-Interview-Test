@@ -1,0 +1,16 @@
+<app-atm-table
+  [atms]="currentPageAtms()"
+  [loading]="loading()"
+  [error]="error()"
+  [lastFetchedAt]="lastFetchedAt()"
+  [pageLabel]="pageLabel()"
+  [canPrev]="pageIndex() > 0"
+  [canNext]="pageIndex() < pageCount() - 1"
+  (addNew)="onAddNew()"
+  (retry)="onRetry()"
+  (prevPage)="onPrevPage()"
+  (nextPage)="onNextPage()"
+  (view)="onView($event)"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+></app-atm-table>

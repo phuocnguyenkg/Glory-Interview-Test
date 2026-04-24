@@ -1,0 +1,56 @@
+<section class="page">
+  <div class="toolbar">
+    <div class="toolbar__left">
+      <h2 class="title">{{ title }}</h2>
+    </div>
+
+    <div class="toolbar__right">
+      <button class="btn btn--ghost" type="button" (click)="cancel.emit()">Back</button>
+      <button
+        class="btn btn--primary"
+        type="button"
+        (click)="save.emit()"
+        [disabled]="!canSave"
+        *ngIf="mode !== 'view'"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <form class="form" [formGroup]="form" (ngSubmit)="save.emit()">
+      <div class="form__grid">
+        <label class="field">
+          <span class="field__label">ATM Name</span>
+          <input class="input" type="text" formControlName="atmName" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Manufacturer</span>
+          <input class="input" type="text" formControlName="manufacturer" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Type</span>
+          <input class="input" type="text" formControlName="type" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Serial Number</span>
+          <input class="input" type="text" formControlName="serialNumber" />
+        </label>
+
+        <label class="field field--full">
+          <span class="field__label">Image URL</span>
+          <input class="input" type="text" formControlName="imageUrl" />
+        </label>
+      </div>
+
+      <div class="preview" *ngIf="form.get('imageUrl')?.value as url">
+        <div class="preview__label">Preview</div>
+        <img class="preview__img" [src]="url" alt="ATM image" />
+      </div>
+    </form>
+  </div>
+</section>

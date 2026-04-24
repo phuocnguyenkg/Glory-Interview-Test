@@ -1,0 +1,99 @@
+<section class="page">
+  <div class="toolbar">
+    <div class="toolbar__left">
+      <h2 class="title">ATM Data Table</h2>
+      <div class="meta">
+        <span class="meta__item" [class.is-muted]="lastFetchedAt === null">
+          Last updated:
+          {{
+            lastFetchedAt === null
+              ? '—'
+              : (lastFetchedAt | date : 'yyyy-MM-dd HH:mm:ss')
+          }}
+        </span>
+        <span class="meta__dot">•</span>
+        <span class="meta__item">Page {{ pageLabel }}</span>
+      </div>
+    </div>
+
+    <div class="toolbar__right">
+      <button class="btn btn--primary" type="button" (click)="addNew.emit()">Add new ATM</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="error as err">
+    <div class="status__text">API error: {{ err }}</div>
+    <button class="btn btn--ghost" type="button" (click)="retry.emit()">Retry</button>
+  </div>
+
+  <div class="status" *ngIf="loading">
+    <div class="status__text">Loading data…</div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="table" aria-label="ATM table">
+      <thead>
+        <tr>
+          <th>ATM Name</th>
+          <th>Manufacturer</th>
+          <th>Type</th>
+          <th>Serial Number</th>
+          <th class="col-image">Image</th>
+          <th class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let atm of atms">
+          <td class="cell-strong">{{ atm.atmName }}</td>
+          <td>{{ atm.manufacturer }}</td>
+          <td>{{ atm.type }}</td>
+          <td>{{ atm.serialNumber }}</td>
+          <td class="col-image">
+            <img class="thumb" [src]="atm.imageUrl" [alt]="atm.atmName" />
+          </td>
+          <td class="col-actions">
+            <button class="icon-btn" type="button" (click)="view.emit(atm)" aria-label="View" title="View">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M12 5c5.5 0 9.9 4.2 11 7-1.1 2.8-5.5 7-11 7S2.1 14.8 1 12c1.1-2.8 5.5-7 11-7Zm0 2C7.9 7 4.5 10 3.3 12 4.5 14 7.9 17 12 17s7.5-3 8.7-5C19.5 10 16.1 7 12 7Zm0 2.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
+                />
+              </svg>
+            </button>
+            <button class="icon-btn" type="button" (click)="edit.emit(atm)" aria-label="Edit" title="Edit">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25Zm2.92 2.83H5v-.92l8.06-8.06.92.92-8.06 8.06ZM20.7 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"
+                />
+              </svg>
+            </button>
+            <button
+              class="icon-btn icon-btn--danger"
+              type="button"
+              (click)="delete.emit(atm.id)"
+              aria-label="Delete"
+              title="Delete"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M6 7h12l-1 14H7L6 7Zm3-3h6l1 2H8l1-2Zm-2 2h10v2H7V6Zm3 5h2v8h-2v-8Zm4 0h2v8h-2v-8Z"
+                />
+              </svg>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && atms.length === 0">
+          <td class="empty" colspan="6">No data</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pager">
+    <button class="btn btn--ghost" type="button" (click)="prevPage.emit()" [disabled]="!canPrev">Prev</button>
+    <div class="pager__label">Page {{ pageLabel }}</div>
+    <button class="btn btn--ghost" type="button" (click)="nextPage.emit()" [disabled]="!canNext">Next</button>
+  </div>
+</section>
